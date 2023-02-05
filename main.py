@@ -97,8 +97,8 @@ def process_l_i(token: dict, level: int, ongoings: list[dict]):
             return
     final_parse.append(token)
 
-print("writing phase 1 output to file...")
-my_print_json(tokens, file="first-out.json")
+# print("writing phase 1 output to file...")
+# my_print_json(tokens, file="first-out.json")
 
 print("Processing " + str(len(tokens)) + " tokens.")
 ongoings = [None for _ in range(len(index_levels))]
@@ -106,5 +106,5 @@ for token in tokens:
     tokenType = int(token.get("tokenType"))
     process_l_i(token, tokenType, ongoings)
 
-print("writing phase 2 output to file...")
-my_print_json(final_parse, file="final-out.json")
+print("writing output to file...")
+my_print_json(final_parse, file="tokens.json")
