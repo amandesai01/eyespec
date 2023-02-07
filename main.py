@@ -15,11 +15,16 @@ index_levels = [
 
 final_parse = []
 
-pdf = pdfplumber.open("./test-case-1.pdf")
+pdf = pdfplumber.open("./test-case-large.pdf")
 
 def clean(s):
     s = s.strip()
     return s
+
+def should_accept_token(token):
+    if token["tokenType"] == 6:
+        return bool(token["tokenMeta"]["data"])
+    return True
 
 def get_index_level_meta_from_match(match, level):
     if level == 0:
@@ -56,29 +61,28 @@ def my_print_json(dic, file="log.json"):
 def get_tokens(lines: list[str], page_no: int):
     tokens = []
     for line in lines:
+        token = None
         for level, index_level in enumerate(index_levels):
             match = re.match(index_level, line)
             if match:
-                tokens.append({
+                token = {
                     "tokenType": level,
                     "tokenMeta": get_index_level_meta_from_match(match, level),
                     "pageNo": page_no
-                })
+                }
                 break
+        if token and should_accept_token(token):
+            tokens.append(token)
+
     return tokens
 
 tokens = []
 try:
     for page_no, page_raw in enumerate(pdf.pages):
-        # if page_no < 20:
-        #     continue
-        if page_no > 35:
-            break
         print("Processing Page No >", page_no + 1)
         text = page_raw.extract_text().splitlines()
         # parts_parsed_copy = copy.deepcopy(parts_parsed)
         tokens.extend(get_tokens(text, page_no + 1))
-        print("ok")
 except KeyboardInterrupt:
     print("Force Stopped")
 except:
@@ -106,5 +110,54 @@ for token in tokens:
     tokenType = int(token.get("tokenType"))
     process_l_i(token, tokenType, ongoings)
 
-print("writing output to file...")
+print("writing tokens to file...")
 my_print_json(final_parse, file="tokens.json")
+
+print("post-processing and structuring tokens...")
+
+
+############################################################################################################
+############################################################################################################
+
+
+def mid_token(token):
+    token_meta_data = token["tokenMeta"].get("data")
+    new_token = token["tokenMeta"]
+    new_token["data"] = [token_meta_data].extend(token["data"]) if token_meta_data else token["data"]
+    new_token["l2"] = True
+    new_token["tokenType"] = token["tokenType"]
+    return new_token
+
+
+def end_token(token):
+    return {
+        "l2": True,
+        "data": token["tokenMeta"]["data"]
+    }
+
+
+def get_l2_tokens(l1_tokens):
+    for i, l1_token in enumerate(l1_tokens):
+        if l1_token.get("l2"):
+            continue
+        tokenType = int(l1_token["tokenType"])
+        if tokenType == 6:
+            l1_tokens[i] = end_token(l1_token)
+        else:
+            l1_tokens[i] = mid_token(l1_token)
+
+
+final_tokens = tokens
+queue = [tokens]
+while True:
+    if queue:
+        tokens = queue.pop(0)
+        get_l2_tokens(tokens)
+        for l2_final_token in tokens:
+            if isinstance(l2_final_token.get("data"), list):
+                queue.append(l2_final_token["data"])
+    else:
+        break
+
+print("Writing l2 tokens to file...")
+my_print_json(final_tokens, "l2-tokens.json")
