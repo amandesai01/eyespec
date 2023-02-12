@@ -89,9 +89,10 @@ except:
     traceback.print_exc()
 
 def process_l_i(token: dict, level: int, ongoings: list[dict]):
+    for i in range(level + 1, len(index_levels)):
+        ongoings[i] = None
     ongoings[level] = token
     ongoings[level]["data"] = []
-    
     for i in range(level - 1, -1, -1):
         if ongoings[i]:
             ongoings[i]["data"].append(token)
