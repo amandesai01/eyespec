@@ -1,0 +1,48 @@
+print("post-processing and structuring tokens...")
+
+
+############################################################################################################
+############################################################################################################
+
+
+def mid_token(token):
+    token_meta_data = token["tokenMeta"].get("data")
+    new_token = token["tokenMeta"]
+    new_token["data"] = [token_meta_data].extend(token["data"]) if token_meta_data else token["data"]
+    new_token["l2"] = True
+    new_token["tokenType"] = token["tokenType"]
+    return new_token
+
+
+def end_token(token):
+    return {
+        "l2": True,
+        "data": token["tokenMeta"]["data"]
+    }
+
+
+def get_l2_tokens(l1_tokens):
+    for i, l1_token in enumerate(l1_tokens):
+        if l1_token.get("l2"):
+            continue
+        tokenType = int(l1_token["tokenType"])
+        if tokenType == 6:
+            l1_tokens[i] = end_token(l1_token)
+        else:
+            l1_tokens[i] = mid_token(l1_token)
+
+
+final_tokens = tokens
+queue = [tokens]
+while True:
+    if queue:
+        tokens = queue.pop(0)
+        get_l2_tokens(tokens)
+        for l2_final_token in tokens:
+            if isinstance(l2_final_token.get("data"), list):
+                queue.append(l2_final_token["data"])
+    else:
+        break
+
+print("Writing l2 tokens to file...")
+my_print_json(final_tokens, "l2-tokens.json")
