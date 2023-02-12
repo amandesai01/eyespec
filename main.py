@@ -15,7 +15,7 @@ index_levels = [
 
 final_parse = []
 
-pdf = pdfplumber.open("./test-case-large.pdf")
+pdf = pdfplumber.open("./test-case-1.pdf")
 
 def clean(s):
     s = s.strip()
