@@ -4,7 +4,7 @@ import pdfplumber
 import traceback
 
 index_levels = [
-    re.compile(r"SECTION\s(\d+)\s(\d+)\s(\d+)"), # SECTION 01 01 01
+    re.compile(r"SECTION\s(\d+)\s(\d+)\s(\d+)(.*)"), # SECTION 01 01 01
     re.compile(r"(PART\s)([\d])\s*[-\s_]*([*a-zA-Z\d]*)"), # group 1 = part number | group 2 = part name
     re.compile(r"^(\d+)\.(\d+)[\s]*([a-zA-Z0-9 ]+)"), # Eg: 1.1 SUMMARY
     re.compile(r"^([A-Z])\. *(.*)"), # Eg. A. <content>
@@ -29,10 +29,10 @@ def should_accept_token(token):
 def get_index_level_meta_from_match(match, level):
     if level == 0:
         return {
-            "#": "SECTION",
             "d1": clean(match.group(1)),
             "d2": clean(match.group(2)),
             "d3": clean(match.group(3)),
+            "title": clean(match.group(4))
         }
     if level == 1:
         return {
