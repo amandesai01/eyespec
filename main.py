@@ -4,18 +4,18 @@ import pdfplumber
 import traceback
 
 index_levels = [
-    re.compile(r"SECTION\s(\d+)\s(\d+)\s(\d+)(.*)"), # SECTION 01 01 01
+    re.compile(r"^ *SECTION\s(\d+)\s(\d+)\s(\d+)(.*)"), # SECTION 01 01 01
     re.compile(r"(PART\s)([\d])\s*[-\s_]*([*a-zA-Z\d]*)"), # group 1 = part number | group 2 = part name
-    re.compile(r"^(\d+)\.(\d+)[\s]*([a-zA-Z0-9 ]+)"), # Eg: 1.1 SUMMARY
-    re.compile(r"^([A-Z])\. *(.*)"), # Eg. A. <content>
-    re.compile(r"^(\d+)\. *(.*)"), # Eg: 1. <content>
-    re.compile(r"^([a-z])\. *(.*)"), # Eg: a. <content>
-    re.compile(r"^(.+)")
+    re.compile(r"^ *(\d+)\.(\d+)[\s]*([a-zA-Z0-9 ]+)"), # Eg: 1.1 SUMMARY
+    re.compile(r"^ *([A-Z])\. *(.*)"), # Eg. A. <content>
+    re.compile(r"^ *(\d+)\. *(.*)"), # Eg: 1. <content>
+    re.compile(r"^ *([a-z])\. *(.*)"), # Eg: a. <content>
+    re.compile(r"^ *(.+)")
 ]
 
 final_parse = []
 
-pdf = pdfplumber.open("./test-case-1.pdf")
+pdf = pdfplumber.open("./test-case-2.pdf")
 
 def clean(s):
     s = s.strip()
