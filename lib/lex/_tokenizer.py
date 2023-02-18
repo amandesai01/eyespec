@@ -1,6 +1,6 @@
 from re import Match, match as re_match
 
-from src.tokens import Token, Token0, Token1, Token2,\
+from lib.tokens import Token, Token0, Token1, Token2,\
                        Token3, Token4, Token5, Token6
 
 from ._regexes import HIERARCHY

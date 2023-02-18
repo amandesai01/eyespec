@@ -1,8 +1,8 @@
 from pdfplumber.page import Page
 from pdfplumber.pdf import PDF
 
-from src.pdf import get_pages, get_lines
-from src.tokens import Token
+from lib.pdf import get_pages, get_lines
+from lib.tokens import Token
 
 from ._tokenizer import tokenize
 

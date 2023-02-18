@@ -1,5 +1,5 @@
-from src.tokens import Token
-from src.lex import get_total_index_levels, identify_level
+from lib.tokens import Token
+from lib.lex import get_total_index_levels, identify_level
 
 TOTAL_INDEX_LEVELS = get_total_index_levels()
 
