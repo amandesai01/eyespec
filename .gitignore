@@ -3,3 +3,5 @@ venv
 test-case-*.pdf
 .idea
 .vscode
+*.xlsx
+.env
