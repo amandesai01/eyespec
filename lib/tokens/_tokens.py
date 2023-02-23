@@ -10,6 +10,11 @@ class Token0(Token):
     d3: int = None
     title: str = None
 
+    def get_section_hash(self) -> str:
+        return "".join([str(self.d1),
+                        str(self.d2),
+                        str(self.d3)])
+
     def get_token_type(self) -> int:
         return 0
 
