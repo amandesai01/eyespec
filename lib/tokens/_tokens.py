@@ -8,12 +8,17 @@ class Token0(Token):
     d1: int = None
     d2: int = None
     d3: int = None
+    post_float: int = None
     title: str = None
 
     def get_section_hash(self) -> str:
-        return "".join([str(self.d1),
-                        str(self.d2),
-                        str(self.d3)])
+        hash_part_1 = "".join([str(self.d1),
+                               str(self.d2),
+                               str(self.d3)])
+        if not self.post_float:
+            return hash_part_1
+        hash_part_2 = "." + str(self.post_float)
+        return hash_part_1 + hash_part_2
 
     def get_token_type(self) -> int:
         return 0

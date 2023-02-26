@@ -61,11 +61,31 @@ def _should_accept(token: Token) -> bool:
 
 
 def _tokenize_0(match: Match, page_no: int) -> Token0:
+    raw_digit_string = clean(match.group(1))
+    digit_string = raw_digit_string.replace(" ", "")  # Remove spaces
+    stubs = digit_string.split(".")
+    digits: list[int] = []
+    if len(stubs) > 0:
+        stub = stubs[0]
+        if len(stub) >= 2:
+            d1_raw = stub[0:2]
+            digits.append(int(d1_raw))
+        if len(stub) >= 4:
+            d2_raw = stub[2:4]
+            digits.append(int(d2_raw))
+        if len(stub) > 4:
+            d3_raw = stub[4:]
+            digits.append(int(d3_raw))
+        if len(stubs) > 1:
+            stub_2 = stubs[1]
+            digits.append(int(stub_2))
+
     return Token0(
-        d1=int(clean(match.group(1))),
-        d2=int(clean(match.group(2))),
-        d3=int(clean(match.group(3))),
-        title=clean(match.group(4)),
+        d1=digits[0] if len(digits) > 0 else None,
+        d2=digits[1] if len(digits) > 1 else None,
+        d3=digits[2] if len(digits) > 2 else None,
+        post_float=digits[3] if len(digits) > 3 else None,
+        title=clean(match.group(2)),
         page_no=page_no,
         children=[]
     )
