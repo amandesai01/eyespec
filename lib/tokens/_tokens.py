@@ -5,10 +5,10 @@ from ._base import Token
 
 @dataclass
 class Token0(Token):
-    d1: int = None
-    d2: int = None
-    d3: int = None
-    post_float: int = None
+    d1: str = None
+    d2: str = None
+    d3: str = None
+    post_float: str = None
     title: str = None
 
     def get_section_hash(self) -> str:

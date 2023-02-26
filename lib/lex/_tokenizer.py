@@ -64,21 +64,21 @@ def _tokenize_0(match: Match, page_no: int) -> Token0:
     raw_digit_string = clean(match.group(1))
     digit_string = raw_digit_string.replace(" ", "")  # Remove spaces
     stubs = digit_string.split(".")
-    digits: list[int] = []
+    digits: list[str] = []
     if len(stubs) > 0:
         stub = stubs[0]
         if len(stub) >= 2:
             d1_raw = stub[0:2]
-            digits.append(int(d1_raw))
+            digits.append(d1_raw)
         if len(stub) >= 4:
             d2_raw = stub[2:4]
-            digits.append(int(d2_raw))
+            digits.append(d2_raw)
         if len(stub) > 4:
             d3_raw = stub[4:]
-            digits.append(int(d3_raw))
+            digits.append(d3_raw)
         if len(stubs) > 1:
             stub_2 = stubs[1]
-            digits.append(int(stub_2))
+            digits.append(stub_2)
 
     return Token0(
         d1=digits[0] if len(digits) > 0 else None,
