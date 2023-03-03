@@ -1,20 +1,28 @@
-import { useState } from 'react';
-import './App.css';
-import Navbar from './components/Navbar';
-import DragDrop from './components/DragDrop';
-import PDFAsset from './components/PDFAsset';
+import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import "./App.css";
+import Home from "./components/Home";
+import Login from "./components/Login";
 
 function App() {
+  const [user, setUser] = useState();
   return (
     <>
-    <Navbar/>
-    <div className="p-10 mx-auto">
-      <div className="flex justify-center items-center py-4">
-        <DragDrop/>
-      </div>
-      <hr/>
-      <PDFAsset/>
-    </div>
+      <Router>
+        <Switch>
+          <Route exact path={"/(index.html)?"}>
+            <Login setUser={setUser} />
+          </Route>
+          <Route exact path={"/Home"}>
+            {user ? <Home /> : <Redirect to={"/"} />}
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
