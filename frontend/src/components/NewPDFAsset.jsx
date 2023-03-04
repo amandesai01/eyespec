@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function NewPDFAsset({ name, pdfAssetLink, excelAssetLink }) {
   const [isProcessing, setIsProcessing] = useState(true);
-  const [excelBtnText, setExcelBtnText] = useState("Processing");
+  const [excelBtnText, setExcelBtnText] = useState("Processing Excel");
 
   // using useEffect only for UI testing
   // Replace it with listener function to processing task

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import sapiensImg from "./assets/sapiens.png";
 import { useHistory } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function Login({ setUser }) {
   const [username, setUsername] = useState("");
@@ -24,13 +25,14 @@ function Login({ setUser }) {
 
   return (
     <>
-      <div className="flex items-center">
+      <Navbar isLoginPage={true} />
+      <div className="flex items-center space-x-[10%]">
         <img
           src={sapiensImg}
           className="flex-1"
           style={{ maxWidth: "60%", backgroundColor: "#E8ECEF" }}
         />
-        <div className="form-control w-full max-w-xs flex-1 ">
+        <div className="form-control w-full max-w-xs flex-auto">
           <h1>Login</h1>
           <label className="label">
             <span className="label-text">Username</span>
@@ -52,8 +54,8 @@ function Login({ setUser }) {
             className="input input-bordered w-full max-w-xs"
             onChange={(event) => passwordHandler(event)}
           />
-          <button className="btn btn-outline" onClick={authenticateUser}>
-            Button
+          <button className="btn btn-outline mt-6" onClick={authenticateUser}>
+            Login
           </button>
         </div>
       </div>

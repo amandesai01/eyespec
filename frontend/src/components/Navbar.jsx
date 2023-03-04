@@ -1,4 +1,4 @@
-function Navbar() {
+function Navbar({ isLoginPage }) {
   return (
     <div className="navbar bg-base-100 drop-shadow">
       <div className="flex-1">
@@ -29,7 +29,7 @@ function Navbar() {
             </li>
           </ul>
         </div> */}
-        <button className="btn">Login</button>
+        {isLoginPage ? null : <button className="btn">Logout</button>}
       </div>
     </div>
   );
