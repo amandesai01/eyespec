@@ -1,4 +1,4 @@
-function PDFAsset() {
+function PDFAsset({ name, pdfAssetLink, excelAssetLink }) {
   return (
     <div
       tabIndex={0}
@@ -6,7 +6,7 @@ function PDFAsset() {
     >
       <div className="collapse-title text-xl font-medium flex items-center">
         <img src="file-1453.svg" alt="file" className="w-8 h-8 mr-2" />
-        JHU APL Building 14 Systems Integration 3
+        {name}
       </div>
       <div className="collapse-content">
         <div className="flex justify-center">

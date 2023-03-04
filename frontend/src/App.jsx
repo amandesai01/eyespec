@@ -19,7 +19,8 @@ function App() {
             <Login setUser={setUser} />
           </Route>
           <Route exact path={"/Home"}>
-            {user ? <Home /> : <Redirect to={"/"} />}
+            {/* {user ? <Home /> : <Redirect to={"/"} />} */}
+            <Home />
           </Route>
         </Switch>
       </Router>
