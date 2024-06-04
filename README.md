@@ -1,4 +1,4 @@
-# Eyespec - Parser construction-site specs
+# Eyespec - Parser for construction-site specs
 
 ## Parse construction-site requirement specs without AI and internet. Completely offline Regex magic 🪄
 
